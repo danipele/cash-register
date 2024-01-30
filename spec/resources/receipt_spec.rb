@@ -87,6 +87,11 @@ RSpec.describe Receipt do
       expect(output_string.string).to include('Code | Name | Price')
     end
 
+    it 'should display the total price' do
+      subject
+      expect(output_string.string).to include('Total price: ')
+    end
+
     context 'when there is a product' do
       before do
         allow(YAML).to receive(:load_file).with('data/products.yml').and_return(products)
@@ -109,6 +114,39 @@ RSpec.describe Receipt do
           subject
           expect(output_string.string).to include('product1 | name | 12.23')
         end
+      end
+
+      it 'should display the total price correctly' do
+        subject
+        expect(output_string.string).to include('Total price: 12.23')
+      end
+    end
+
+    context 'when there are multiple products' do
+      before do
+        allow(YAML).to receive(:load_file).with('data/products.yml').and_return(products)
+        described_instance.add_product(product1)
+        described_instance.add_product(product2)
+      end
+
+      let(:product1) { Product.new('product1') }
+      let(:product2) { Product.new('product2') }
+      let(:products) do
+        {
+          'product1' => { 'name' => 'name1', 'price' => '12.23', 'rules' => [] },
+          'product2' => { 'name' => 'name2', 'price' => '10.00', 'rules' => [] }
+        }
+      end
+
+      it 'should display all the products' do
+        subject
+        expect(output_string.string).to include('product1 | name1 | 12.23')
+        expect(output_string.string).to include('product2 | name2 | 10.0')
+      end
+
+      it 'should display the total price correctly' do
+        subject
+        expect(output_string.string).to include('Total price: 22.23')
       end
     end
   end

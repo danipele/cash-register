@@ -16,10 +16,15 @@ class Receipt
   end
 
   def display
-    puts 'Receipt'
+    puts "\nReceipt"
     puts 'Code | Name | Price'
     @products.each do |product|
       puts "#{product.id} | #{product.name} | #{product.price.round(2)}"
     end
+    puts "Total price: #{total_price}\n\n"
+  end
+
+  def total_price
+    @products.map(&:price).sum
   end
 end

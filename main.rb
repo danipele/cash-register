@@ -10,7 +10,7 @@ def scan_product
 
   Product.new(scan)
 rescue InvalidProduct => _e
-  puts 'Invalid product'
+  puts "Invalid product. Try again!\n\n"
   scan_product
 end
 
