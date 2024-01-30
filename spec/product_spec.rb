@@ -18,5 +18,13 @@ RSpec.describe Product do
     it 'should initialize price with correct value' do
       expect(subject.price).to eq(12.23)
     end
+
+    context 'when invalid product' do
+      let(:product_id) { 'invalid_product' }
+
+      it 'should raise an error' do
+        expect { subject }.to raise_error(InvalidProduct)
+      end
+    end
   end
 end
