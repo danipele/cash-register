@@ -1,4 +1,4 @@
-require_relative '../scanner'
+require_relative '../../services/scanner'
 
 RSpec.describe Scanner do
   before do

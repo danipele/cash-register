@@ -1,6 +1,11 @@
 GR1:
   name: Green Tea
   price: 3.11
+  rules:
+    - type: get_free
+      params:
+        buy: 1
+        free: 1
 SR1:
   name: Strawberries
   price: 5.00

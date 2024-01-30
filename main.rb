@@ -1,6 +1,6 @@
-require_relative 'scanner'
-require_relative 'receipt'
-require_relative 'product'
+require_relative 'services/scanner'
+require_relative 'resources/receipt'
+require_relative 'resources/product'
 
 def scan_product
   product_id = Scanner.scan

@@ -1,5 +1,6 @@
-require_relative '../receipt'
 require 'yaml'
+
+require_relative '../../resources/receipt'
 
 RSpec.describe Receipt do
   let(:described_instance) { described_class.new }
@@ -26,6 +27,11 @@ RSpec.describe Receipt do
         subject
         expect(described_instance.products.count).to eq(0)
       end
+
+      it 'should not apply the rules' do
+        expect_any_instance_of(Product).not_to receive(:apply_rules)
+        subject
+      end
     end
 
     context 'when product is not a Product' do
@@ -35,6 +41,11 @@ RSpec.describe Receipt do
         subject
         expect(described_instance.products.count).to eq(0)
       end
+
+      it 'should not apply the rules' do
+        expect_any_instance_of(Product).not_to receive(:apply_rules)
+        subject
+      end
     end
 
     context 'when product is valid' do
@@ -43,11 +54,16 @@ RSpec.describe Receipt do
       end
 
       let(:product) { Product.new('product1') }
-      let(:products) { { 'product1' => { 'name' => 'name', 'price' => '12.23' } } }
+      let(:products) { { 'product1' => { 'name' => 'name', 'price' => '12.23', 'rules' => [] } } }
 
-      it 'should not add the product' do
+      it 'should add the product' do
         subject
         expect(described_instance.products.count).to eq(1)
+      end
+
+      it 'should apply the rules' do
+        expect_any_instance_of(Product).to receive(:apply_rules).with([product]).once
+        subject
       end
     end
   end
@@ -78,7 +94,7 @@ RSpec.describe Receipt do
       end
 
       let(:product) { Product.new('product1') }
-      let(:products) { { 'product1' => { 'name' => 'name', 'price' => '12.23' } } }
+      let(:products) { { 'product1' => { 'name' => 'name', 'price' => '12.23', 'rules' => [] } } }
 
       it 'should display the product' do
         subject

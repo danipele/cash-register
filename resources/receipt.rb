@@ -1,5 +1,4 @@
 require_relative 'product'
-require 'pry-byebug'
 
 class Receipt
   attr_accessor :products, :price
@@ -13,6 +12,7 @@ class Receipt
     return unless product.instance_of?(Product)
 
     @products << product
+    product.apply_rules(@products)
   end
 
   def display
@@ -21,11 +21,5 @@ class Receipt
     @products.each do |product|
       puts "#{product.id} | #{product.name} | #{product.price}"
     end
-  end
-
-  private
-
-  def product_hash
-    YAML.load_file('data/products.yml')[prod]
   end
 end
