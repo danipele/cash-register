@@ -9,6 +9,16 @@ GR1:
 SR1:
   name: Strawberries
   price: 5.00
+  rules:
+    - type: discount
+      params:
+        buy: 3
+        new_price: 4.50
 CF1:
   name: Coffee
   price: 11.23
+  rules:
+    - type: discount
+      params:
+        buy: 3
+        new_price: 2/3

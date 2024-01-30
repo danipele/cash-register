@@ -86,14 +86,16 @@ RSpec.describe Product do
         [
           { 'type' => 'get_free', 'params' => { 'buy' => 1, 'free' => 1 } },
           { 'type' => 'invalid', 'params' => { 'buy' => 1, 'free' => 1 } },
-          { 'type' => 'get_free', 'params' => { 'buy' => 1, 'free' => 1 } }
+          { 'type' => 'get_free', 'params' => { 'buy' => 1, 'free' => 1 } },
+          { 'type' => 'discount', 'params' => { 'buy' => 2, 'new_price' => 3.0 } }
         ]
       end
       let(:rule_double) { double(:rule, apply: nil) }
 
       it 'should apply the rules' do
         expect(GetFree).to receive(:new).and_return(rule_double).twice
-        expect(rule_double).to receive(:apply).twice
+        expect(Discount).to receive(:new).and_return(rule_double).once
+        expect(rule_double).to receive(:apply).exactly(3).times
         subject
       end
     end

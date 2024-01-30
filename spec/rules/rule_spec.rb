@@ -8,15 +8,14 @@ RSpec.describe Rule do
     allow(YAML).to receive(:load_file).with('data/products.yml').and_return(yaml_products)
   end
 
-  let(:described_instance) { described_class.new(product, products, params) }
+  let(:described_instance) { described_class.new(products, params) }
   let(:yaml_products) do
     {
       'product1' => { 'name' => 'name', 'price' => '12.23', 'rules' => [] },
       'product2' => { 'name' => 'name2', 'price' => '10.00', 'rules' => [] }
     }
   end
-  let(:product) { Product.new('product1') }
-  let(:products) { [Product.new('product2')] }
+  let(:products) { [Product.new('product2'), Product.new('product1')] }
   let(:params) { { 'param1' => 'value1' } }
 
   describe '#new' do

@@ -19,7 +19,7 @@ class Receipt
     puts 'Receipt'
     puts 'Code | Name | Price'
     @products.each do |product|
-      puts "#{product.id} | #{product.name} | #{product.price}"
+      puts "#{product.id} | #{product.name} | #{product.price.round(2)}"
     end
   end
 end

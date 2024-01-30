@@ -1,4 +1,5 @@
 require_relative '../rules/get_free'
+require_relative '../rules/discount'
 
 class InvalidProduct < StandardError; end
 
@@ -30,7 +31,9 @@ class Product
   def apply_rule(rule_type, params, products)
     case rule_type
     when 'get_free'
-      rule = GetFree.new(self, products, params)
+      rule = GetFree.new(products, params)
+    when 'discount'
+      rule = Discount.new(products, params)
     else
       return
     end

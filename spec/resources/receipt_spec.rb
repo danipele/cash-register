@@ -94,11 +94,21 @@ RSpec.describe Receipt do
       end
 
       let(:product) { Product.new('product1') }
-      let(:products) { { 'product1' => { 'name' => 'name', 'price' => '12.23', 'rules' => [] } } }
+      let(:products) { { 'product1' => { 'name' => 'name', 'price' => price, 'rules' => [] } } }
+      let(:price) { '12.23' }
 
       it 'should display the product' do
         subject
         expect(output_string.string).to include('product1 | name | 12.23')
+      end
+
+      context 'when price has more than 2 decimals' do
+        let(:price) { '12.233333333' }
+
+        it 'should display the price with 2 decimals' do
+          subject
+          expect(output_string.string).to include('product1 | name | 12.23')
+        end
       end
     end
   end

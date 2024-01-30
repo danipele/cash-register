@@ -2,9 +2,13 @@ require_relative 'services/scanner'
 require_relative 'resources/receipt'
 require_relative 'resources/product'
 
+class StopScanning < StandardError; end
+
 def scan_product
-  product_id = Scanner.scan
-  Product.new(product_id)
+  scan = Scanner.scan
+  raise StopScanning if scan == 'q'
+
+  Product.new(scan)
 rescue InvalidProduct => _e
   puts 'Invalid product'
   scan_product
@@ -18,8 +22,8 @@ def go
 
     receipt.add_product(product)
     receipt.display
-
-    break if Scanner.stop_scanning?
+  rescue StopScanning
+    break
   end
 end
 

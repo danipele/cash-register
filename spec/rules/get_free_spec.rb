@@ -8,7 +8,7 @@ RSpec.describe GetFree do
     allow(YAML).to receive(:load_file).with('data/products.yml').and_return(yaml_products)
   end
 
-  let(:described_instance) { described_class.new(product, products, params) }
+  let(:described_instance) { described_class.new(products, params) }
   let(:yaml_products) do
     {
       'product1' => { 'name' => 'name', 'price' => '12.23', 'rules' => [] },
@@ -19,7 +19,6 @@ RSpec.describe GetFree do
   describe '#apply' do
     subject { described_instance.apply }
 
-    let(:product) { Product.new('product2') }
     let(:products) { [Product.new('product1'), Product.new('product2')] }
     let(:params) { { 'buy' => buy, 'free' => 2 } }
     let(:rules) { [{ 'type' => 'get_free', 'params' => params }] }

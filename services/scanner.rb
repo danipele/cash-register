@@ -2,22 +2,8 @@ require 'yaml'
 
 class Scanner
   def self.scan
-    puts "Scan a product: (#{products.join(',')})"
+    puts "Scan a product: (#{products.join(',')}) or press q to quit"
     gets.chomp
-  end
-
-  def self.stop_scanning?
-    puts 'Do you have more products to scan? (y = yes, n = no)'
-
-    case gets.chomp
-    when 'n'
-      true
-    when 'y'
-      false
-    else
-      puts 'Invalid answer'
-      stop_scanning?
-    end
   end
 
   def self.products
