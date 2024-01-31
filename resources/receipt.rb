@@ -21,7 +21,7 @@ class Receipt
     @products.each do |product|
       puts "#{product.id} | #{product.name} | #{product.price.round(2)}"
     end
-    puts "Total price: #{total_price}\n\n"
+    puts "Total price: #{total_price.round(2)}\n\n"
   end
 
   def total_price

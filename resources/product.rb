@@ -29,15 +29,11 @@ class Product
   end
 
   def apply_rule(rule_type, params, products)
-    case rule_type
-    when 'get_free'
-      rule = GetFree.new(products, params)
-    when 'discount'
-      rule = Discount.new(products, params)
-    else
-      return
-    end
+    rule_class = Object.const_get(rule_type.split('_').map(&:capitalize).join)
+    rule = rule_class.new(products, params)
 
     rule.apply
+  rescue NameError
+    puts 'Unknown rule'
   end
 end
